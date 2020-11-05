@@ -10,6 +10,7 @@ services:
             MYSQL_DATABASE: phonebook
             MYSQL_USER: clarusway
             MYSQL_PASSWORD: Clarusway
+            MYSQL_PORT: 3306
         networks:
             - clarusnet
     app:
