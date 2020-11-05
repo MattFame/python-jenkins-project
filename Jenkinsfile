@@ -45,12 +45,10 @@ pipeline{
         stage('build'){
             agent any
             steps{
-                sh "docker build -t matt/handson-jenkins ."
-                sh "docker tag 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson/matt/handson-jenkins:latest"
+                sh "docker build -t matt/jenkins-handson ."
+                sh "docker tag matt/jenkins-handson:latest  046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
             }
         }
-    
-    
     
     }
 }
