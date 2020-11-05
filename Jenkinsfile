@@ -7,7 +7,6 @@ pipeline{
                    image 'python:alpine'
                }
            }
-           
            steps{
                withEnv(["HOME=${env.WORKSPACE}"]) {
                     sh 'pip install -r requirements.txt'
