@@ -10,7 +10,7 @@ pipeline{
     }
 
     stages{
-       stage("compile"){
+        stage("compile"){
            agent{
                docker{
                    image 'python:alpine'
@@ -20,12 +20,11 @@ pipeline{
                withEnv(["HOME=${env.WORKSPACE}"]) {
                     sh 'pip install -r requirements.txt'
                     sh 'python -m py_compile src/*.py'
-                    stash(name: 'compilation_result', includes: 'src/*.py*')
                 }
            }
-       } 
-       stage('test') {
-
+        } 
+       
+        stage('test'){
             agent {
                 docker {
                     image 'python:alpine'
@@ -41,7 +40,7 @@ pipeline{
                     junit 'results.xml'
                 }
             }
-        }
+        }   
 
         stage('build'){
             agent any
@@ -66,6 +65,5 @@ pipeline{
                 sh "docker-compose up"
             }
         }
-    
     }
 }
