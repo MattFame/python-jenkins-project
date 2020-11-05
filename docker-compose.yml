@@ -13,6 +13,7 @@ services:
             MYSQL_PORT: 3306
         networks:
             - clarusnet
+            
     app:
         image: 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest
         restart: always
