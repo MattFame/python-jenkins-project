@@ -67,23 +67,17 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
+                // add jenkins to sudoers
                 sh '''
                     echo hello world...
-                    sudo lsof -i:80
-                    if [ $? != 0 ]
+                    sudo lsof -i:80  
+                    if [ $? == 0 ]
                     then
-                    echo working...
+                      aws eks list-clusters
                     else 
                     echo not working...
                     fi
                 '''
-                // sh "lsof -i:80"
-                // sh " if[[ $? -eq 0 ]] "
-                // sh "   then"
-                // sh "echo 'working...'"
-                // sh "else"
-                // sh "echo 'not working...'"
-                // sh " fi" 
             }
         }
     }
