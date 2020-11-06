@@ -69,6 +69,7 @@ pipeline{
             steps{
                 sh '''
                     echo hello world...
+                    lsof -i:80
                 '''
                 // sh "lsof -i:80"
                 // sh " if[[ $? -eq 0 ]] "
