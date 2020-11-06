@@ -69,7 +69,7 @@ pipeline{
             steps{
                 sh '''
                     echo hello world...
-                    . /usr/sbin/lsof -i:80
+                    sudo lsof -i:80
                 '''
                 // sh "lsof -i:80"
                 // sh " if[[ $? -eq 0 ]] "
