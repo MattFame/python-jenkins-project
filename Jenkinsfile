@@ -68,7 +68,7 @@ pipeline{
             agent any
             steps{
                 sh '''
-                    lsof -i:80
+                    bash lsof -i:80
                     if[[ $0 -eq 0 ]]
                     then
                         echo "working..."
