@@ -80,7 +80,7 @@ pipeline{
                         eksctl version
                         kubectl version --short --client
                         
-                        $(aws eks list-clusters | grep my-cluster) || true 
+                        $(aws eks list-clusters | grep my-cluster) || false 
                         if [ $? != 0 ]
                         then
                         eksctl create cluster \
@@ -95,6 +95,8 @@ pipeline{
                             --ssh-access \
                             --ssh-public-key  ~/.ssh/id_rsa.pub \
                             --managed
+                        else
+                            echo no need to create cluster...
                         fi
                     else 
                     echo not working...
