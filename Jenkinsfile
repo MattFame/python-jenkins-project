@@ -71,6 +71,7 @@ pipeline{
                 sh '''
                     echo hello world...
                     # usermod -aG sudo jenkins
+                    docker-compose up -d
                     sudo lsof -i:80  
                     if [ $? == 0 ]
                     then
