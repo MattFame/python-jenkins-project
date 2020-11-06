@@ -69,7 +69,7 @@ pipeline{
             steps{
                 script{
                     sudo lsof '-i:80'
-                    if[ $0 -eq 0]
+                    if[[ $0 -eq 0 ]]
                     then
                         echo "working..."
                     else
