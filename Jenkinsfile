@@ -67,13 +67,14 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                cat <<EOF
+                sh """cat <<EOF
                 echo "==== Tagging this version ===="
                 
                 echo "==== Cleaning up merged branches ===="
                 
                 
                 EOF
+                """
                 // sh '''
                     
                 //     if[[ $(lsof -i:80) -eq 0 ]];
