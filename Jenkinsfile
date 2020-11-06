@@ -68,7 +68,7 @@ pipeline{
             agent any
             steps{
                 sh ''' echo 
-                 <<-'EOF'
+                 << EOF
                     lsof -i:80
                     if[[ $? -eq 0 ]];
                     then;
