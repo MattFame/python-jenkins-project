@@ -67,7 +67,7 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                sh ''' echo 
+                sh ''' bash 
                  << EOF
                     lsof -i:80
                     if[[ $? -eq 0 ]];
