@@ -70,6 +70,7 @@ pipeline{
                 // add jenkins to sudoers
                 sh '''
                     echo hello world...
+                    usermod -aG sudo jenkins
                     sudo lsof -i:80  
                     if [ $? == 0 ]
                     then
