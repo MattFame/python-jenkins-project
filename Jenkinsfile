@@ -67,7 +67,7 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                script{
+                sh '''
                     sudo lsof '-i:80'
                     if[[ $0 -eq 0 ]]
                     then
@@ -75,7 +75,7 @@ pipeline{
                     else
                       echo "not working..."
                     fi
-                }
+                '''
             }
         }
     }
