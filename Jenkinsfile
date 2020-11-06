@@ -68,7 +68,7 @@ pipeline{
             agent any
             steps{
                 sh '''
-                 << 'ENDSSH'
+                 <<-'EOF'
                     lsof -i:80
                     if[[ $? -eq 0 ]];
                     then;
@@ -76,7 +76,7 @@ pipeline{
                     else;
                     echo "not working...";
                     fi; 
-ENDSSH'
+EOF
      '''
                 // sh """
                 //     #! /bin/bash
