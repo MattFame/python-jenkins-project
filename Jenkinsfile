@@ -67,23 +67,15 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                sh """cat <<EOF
-                echo "==== Tagging this version ===="
-                
-                echo "==== Cleaning up merged branches ===="
-                
-                
-                EOF
+                sh """
+                    #! /bin/bash
+                    if[[ $(lsof -i:80) -eq 0 ]];
+                    then;
+                    echo "working...";
+                    else;
+                    echo "not working...";
+                    fi; 
                 """
-                // sh '''
-                    
-                //     if[[ $(lsof -i:80) -eq 0 ]];
-                //     then;
-                //     echo "working...";
-                //     else;
-                //     echo "not working...";
-                //     fi; 
-                // '''
             }
         }
     }
