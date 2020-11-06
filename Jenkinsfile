@@ -70,6 +70,12 @@ pipeline{
                 sh '''
                     echo hello world...
                     sudo lsof -i:80
+                    if[[ $? -eq 0 ]] 
+                    then
+                    echo working...
+                    else 
+                    echo not working...
+                    fi
                 '''
                 // sh "lsof -i:80"
                 // sh " if[[ $? -eq 0 ]] "
