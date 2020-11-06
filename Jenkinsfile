@@ -80,8 +80,8 @@ pipeline{
                         eksctl version
                         kubectl version --short --client
                         
-                        $(aws eks list-clusters | grep my-cluster)
-                        if [ $? == 0 ]
+                        $(aws eks list-clusters | grep my-cluster) || true 
+                        if [ $? != 0 ]
                         then
                         eksctl create cluster \
                             --name my-cluster \
