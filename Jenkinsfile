@@ -69,7 +69,8 @@ pipeline{
             steps{
                 sh """
                     #! /bin/bash
-                    if[[ $(lsof -i:80) -eq 0 ]];
+                    lsof -i:80
+                    if[[ $? -eq 0 ]];
                     then;
                     echo "working...";
                     else;
