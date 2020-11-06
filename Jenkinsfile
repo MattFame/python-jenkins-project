@@ -68,12 +68,12 @@ pipeline{
             agent any
             steps{
                 sh "
-                    lsof -i:80
+                    lsof -i:80;
                     if[[ $? -eq 0 ]];
                     then;
-                    echo "working...";
+                    echo 'working...';
                     else;
-                    echo "not working...";
+                    echo 'not working...';
                     fi; 
                 "
             }
