@@ -67,8 +67,8 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                sh """
-                    #! /bin/bash
+                sh '''
+                 << 'ENDSSH'
                     lsof -i:80
                     if[[ $? -eq 0 ]];
                     then;
@@ -76,7 +76,12 @@ pipeline{
                     else;
                     echo "not working...";
                     fi; 
-                """
+ENDSSH'
+     '''
+                // sh """
+                //     #! /bin/bash
+                    
+                // """
             }
         }
     }
