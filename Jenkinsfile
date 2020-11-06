@@ -79,8 +79,8 @@ pipeline{
                         docker-compose down
                         eksctl version
                         kubectl version --short --client
-                        
-                        if [ $(aws eks list-clusters | grep my-cluster) != 0 ]
+                        exist="$(aws eks list-clusters | grep my-cluster)"
+                        if [ $exist == "" ]
                         then
                         eksctl create cluster \
                             --name my-cluster \
