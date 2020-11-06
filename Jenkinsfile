@@ -76,7 +76,23 @@ pipeline{
                         docker-compose down
                         eksctl version
                         kubectl version --short --client
-                        aws eks list-clusters
+                        
+                        cluster=$(aws eks list-clusters --output text --query my-cluster)
+                        if [ $cluster != '' ]
+                        then
+                        eksctl create cluster \
+                            --name my-cluster \
+                            --version 1.17 \
+                            --region us-east-2 \
+                            --nodegroup-name my-nodes \
+                            --node-type t2.small \
+                            --nodes 1 \
+                            --nodes-min 1 \
+                            --nodes-max 2 \
+                            --ssh-access \
+                            --ssh-public-key  ~/.ssh/id_rsa.pub \
+                            --managed
+                        fi
                     else 
                     echo not working...
                     fi
