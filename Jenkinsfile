@@ -69,6 +69,7 @@ pipeline{
             steps{
                 // add jenkins to sudoers
                 sh '''
+                    #!/bin/sh
                     echo hello world...
                     # usermod -aG sudo jenkins
                     docker-compose up -d
