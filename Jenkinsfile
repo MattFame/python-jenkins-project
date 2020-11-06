@@ -68,7 +68,7 @@ pipeline{
             agent any
             steps{
                 script{
-                    sudo lsof -i:80
+                    sudo lsof '-i:80'
                     if[ $0 -eq 0]
                     then
                         echo "working..."
