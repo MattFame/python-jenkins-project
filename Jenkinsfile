@@ -73,7 +73,10 @@ pipeline{
                     sudo lsof -i:80  
                     if [ $? == 0 ]
                     then
-                      aws eks list-clusters
+                        docker-compose down
+                        eksctl version
+                        kubectl version --short --client
+                        aws eks list-clusters
                     else 
                     echo not working...
                     fi
