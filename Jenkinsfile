@@ -67,14 +67,13 @@ pipeline{
         stage('app-check'){
             agent any
             steps{
-                sh "lsof -i:80;
-                    if[[ $? -eq 0 ]];
-                    then;
-                    echo 'working...';
-                    else;
-                    echo 'not working...';
-                    fi; 
-                "
+                sh "lsof -i:80"
+                sh " if[[ $? -eq 0 ]] "
+                sh "   then"
+                sh "echo 'working...'"
+                sh "else"
+                sh "echo 'not working...'"
+                sh " fi" 
             }
         }
     }
