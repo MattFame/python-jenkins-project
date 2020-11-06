@@ -79,7 +79,7 @@ pipeline{
                         eksctl version
                         kubectl version --short --client
                         
-                        cluster=$(aws eks list-clusters --output text --query my-cluster)
+                        cluster=$(aws eks list-clusters --output text --query my-cluster | grep my-cluster)
                         if [ $cluster != '' ]
                         then
                         eksctl create cluster \
