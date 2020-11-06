@@ -70,7 +70,7 @@ pipeline{
                 sh '''
                     echo hello world...
                     sudo lsof -i:80
-                    if [ $? == 0 ]
+                    if [ $? != 0 ]
                     then
                     echo working...
                     else 
