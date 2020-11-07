@@ -89,7 +89,7 @@ pipeline{
 
                         eksctl create cluster \
                             --name my-cluster \
-                            --version 1.19 \
+                            --version 1.18 \
                             --region us-east-1 \
                             --nodegroup-name my-nodes \
                             --node-type t2.small \
