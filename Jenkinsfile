@@ -86,7 +86,7 @@ pipeline{
                             --nodes 1 \
                             --nodes-min 1 \
                             --nodes-max 2 \
-                            --ssh-access \
+                            --ssh-access=true \
                             --ssh-public-key  ~/.ssh/id_rsa.pub \
                             --managed
                         else
