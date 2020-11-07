@@ -70,6 +70,7 @@ pipeline{
                 // add jenkins to sudoers
                 sh '''
                     #!/bin/sh
+                    echo $HOME
                     running=$(sudo lsof -i:80) || true
                     if [ "$running" != '' ]
                     then
