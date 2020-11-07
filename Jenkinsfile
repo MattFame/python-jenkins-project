@@ -73,7 +73,7 @@ pipeline{
                     echo hello world...
                     # usermod -aG sudo jenkins
                     # docker-compose up -d
-                    running=$(sudo lsof -i:80) || true
+                    running="$(sudo lsof -i:80)" || true
                     if [ $running !=  ]
                     then
                         docker-compose down
