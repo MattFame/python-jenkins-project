@@ -111,7 +111,7 @@ pipeline{
         stage('get-nodes'){
             agent any
             steps{
-                sh "kubectl get nodes"                
+                sh "kubectl apply -f k8s"                
             }
         }
     }

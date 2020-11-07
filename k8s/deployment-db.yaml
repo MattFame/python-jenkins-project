@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-db
+  labels:
+    app: deployment-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: db
+  template:
+    metadata:
+      labels:
+        name: db
+    spec:
+      containers:
+      - name: mysql:5.7
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: R1234r
+        - name: MYSQL_DATABASE
+          value: phonebook
+        - name: MYSQL_USER
+          value: clarusway
+        - name: MYSQL_PASSWORD
+          value: Clarusway
+        - name: MYSQL_PORT
+          value: 3306
+        volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
