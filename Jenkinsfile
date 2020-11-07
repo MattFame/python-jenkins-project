@@ -8,7 +8,6 @@ pipeline{
         MYSQL_DATABASE_PORT = 3306
         PATH="/usr/local/bin/:${env.PATH}"
     }
-
     stages{
         stage("compile"){
            agent{
