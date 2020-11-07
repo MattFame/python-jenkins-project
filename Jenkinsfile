@@ -87,7 +87,7 @@ pipeline{
                             --nodes-min 1 \
                             --nodes-max 2 \
                             --ssh-access \
-                            --ssh-public-key  /home/ec2-user/.ssh/id_rsa.pub \
+                            --ssh-public-key  mattsKey \
                             --managed
                         else
                             echo no need to create cluster...
