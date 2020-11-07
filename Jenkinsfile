@@ -70,22 +70,17 @@ pipeline{
                 // add jenkins to sudoers
                 sh '''
                     #!/bin/sh
-                    echo hello world...
-                    # usermod -aG sudo jenkins
-                    # docker-compose up -d
                     running=$(sudo lsof -i:80) || true
                     if [ "$running" != '' ]
                     then
                         docker-compose down
-                        eksctl version
-                        kubectl version --short --client
                         exist="$(aws eks list-clusters | grep my-cluster)" || true
                         if [ "$exist" == '' ]
                         then
                         eksctl create cluster \
                             --name my-cluster \
                             --version 1.17 \
-                            --region us-east-2 \
+                            --region us-east-1 \
                             --nodegroup-name my-nodes \
                             --node-type t2.small \
                             --nodes 1 \
