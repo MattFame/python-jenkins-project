@@ -66,8 +66,8 @@ pipeline{
         stage('get-keypair'){
             agent any
             steps{
-                sh "aws ec2 create-key-pair --region us-east-2 --key-name matts2ndKey.pem --query KeyMaterial --output text > matts2ndKey.pem"
-                sh "chmod 400 matts2ndKey.pem"
+                //sh "aws ec2 create-key-pair --region us-east-2 --key-name matts2ndKey.pem --query KeyMaterial --output text > matts2ndKey.pem"
+                //sh "chmod 400 matts2ndKey.pem"
                 sh "ssh-keygen -y -f matts2ndKey.pem >> matts2ndKey_public.pem"
                 
 
