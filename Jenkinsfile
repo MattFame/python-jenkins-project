@@ -80,7 +80,7 @@ pipeline{
                         eksctl create cluster \
                             --name my-cluster \
                             --version 1.17 \
-                            --region us-east-1 \
+                            --region us-east-2 \
                             --nodegroup-name my-nodes \
                             --node-type t2.small \
                             --nodes 1 \
