@@ -74,13 +74,13 @@ pipeline{
                     # usermod -aG sudo jenkins
                     # docker-compose up -d
                     running=$(sudo lsof -i:80) || true
-                    if [ "$running" !=  ]
+                    if [ "$running" != '' ]
                     then
                         docker-compose down
                         eksctl version
                         kubectl version --short --client
                         exist="$(aws eks list-clusters | grep my-cluster)" || true
-                        if [ $exist ==  ]
+                        if [ "$exist" == '' ]
                         then
                         eksctl create cluster \
                             --name my-cluster \
