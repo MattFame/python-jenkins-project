@@ -63,6 +63,13 @@ pipeline{
                 sh "docker-compose up -d"
             }
         }
+        stage('get-keypair'){
+            agent any
+            steps{
+                sh "aws ec2 create-key-pair --region us-east-2 --key-name matts2ndKey.pem --query KeyMaterial --output text > matts2ndKey.pem"
+                sh "chmod 400 matts2ndKey.pem"
+            }
+        }
         stage('app-check'){
             agent any
             steps{
@@ -77,17 +84,18 @@ pipeline{
                         exist="$(aws eks list-clusters | grep my-cluster)" || true
                         if [ "$exist" == '' ]
                         then
+
                         eksctl create cluster \
                             --name my-cluster \
                             --version 1.17 \
-                            --region us-east-1 \
+                            --region us-east-2 \
                             --nodegroup-name my-nodes \
                             --node-type t2.small \
                             --nodes 1 \
                             --nodes-min 1 \
                             --nodes-max 2 \
                             --ssh-access \
-                            --ssh-public-key  mattsKey.pem \
+                            --ssh-public-key  matts2ndKey.pem \
                             --managed
                         else
                             echo no need to create cluster...
