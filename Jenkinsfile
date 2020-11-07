@@ -68,9 +68,7 @@ pipeline{
             steps{
                 //sh "aws ec2 create-key-pair --region us-east-2 --key-name matts2ndKey.pem --query KeyMaterial --output text > matts2ndKey.pem"
                 //sh "chmod 400 matts2ndKey.pem"
-                sh "ssh-keygen -y -f matts2ndKey.pem >> matts2ndKey_public.pem"
-                
-
+                //sh "ssh-keygen -y -f matts2ndKey.pem >> matts2ndKey_public.pem"
             }
         }
         stage('app-check'){
@@ -90,8 +88,8 @@ pipeline{
 
                         eksctl create cluster \
                             --name my-cluster \
-                            --version 1.17 \
-                            --region us-east-2 \
+                            --version 1.19 \
+                            --region us-east-1 \
                             --nodegroup-name my-nodes \
                             --node-type t2.small \
                             --nodes 1 \
