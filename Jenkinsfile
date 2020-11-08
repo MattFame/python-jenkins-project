@@ -90,6 +90,7 @@ pipeline{
         stage('app-check_&_cluster-create'){
             agent any
             steps{
+                // dont forget to add jenkins to sudoers ----> jenkins ALL=(ALL) NOPASSWD: ALL
                 sh '''
                     #!/bin/sh
                     echo $HOME
