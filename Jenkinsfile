@@ -9,53 +9,53 @@ pipeline{
         PATH="/usr/local/bin/:${env.PATH}"
     }
     stages{
-        stage("compile"){
-           agent{
-               docker{
-                   image 'python:alpine'
-               }
-           }
-           steps{
-               withEnv(["HOME=${env.WORKSPACE}"]) {
-                    sh 'pip install -r requirements.txt'
-                    sh 'python -m py_compile src/*.py'
-                }
-           }
-        } 
+        // stage("compile"){
+        //    agent{
+        //        docker{
+        //            image 'python:alpine'
+        //        }
+        //    }
+        //    steps{
+        //        withEnv(["HOME=${env.WORKSPACE}"]) {
+        //             sh 'pip install -r requirements.txt'
+        //             sh 'python -m py_compile src/*.py'
+        //         }
+        //    }
+        // } 
        
-        stage('test'){
-            agent {
-                docker {
-                    image 'python:alpine'
-                }
-            }
-            steps {
-                withEnv(["HOME=${env.WORKSPACE}"]) {
-                    sh 'python -m pytest -v --junit-xml results.xml src/appTest.py'
-                }
-            }
-            post {
-                always {
-                    junit 'results.xml'
-                }
-            }
-        }   
+        // stage('test'){
+        //     agent {
+        //         docker {
+        //             image 'python:alpine'
+        //         }
+        //     }
+        //     steps {
+        //         withEnv(["HOME=${env.WORKSPACE}"]) {
+        //             sh 'python -m pytest -v --junit-xml results.xml src/appTest.py'
+        //         }
+        //     }
+        //     post {
+        //         always {
+        //             junit 'results.xml'
+        //         }
+        //     }
+        // }   
 
-        stage('build'){
-            agent any
-            steps{
-                sh "docker build -t matt/jenkins-handson ."
-                sh "docker tag matt/jenkins-handson:latest  046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
-            }
-        }
+        // stage('build'){
+        //     agent any
+        //     steps{
+        //         sh "docker build -t matt/jenkins-handson ."
+        //         sh "docker tag matt/jenkins-handson:latest  046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
+        //     }
+        // }
 
-        stage('push'){
-            agent any
-            steps{
-                sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 046402772087.dkr.ecr.us-east-1.amazonaws.com"
-                sh "docker push 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
-            }
-        }
+        // stage('push'){
+        //     agent any
+        //     steps{
+        //         sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 046402772087.dkr.ecr.us-east-1.amazonaws.com"
+        //         sh "docker push 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
+        //     }
+        // }
 
         stage('compose'){
             agent any
@@ -74,7 +74,7 @@ pipeline{
                         echo "file exists..."
                     else
                         aws ec2 delete-key-pair --key-name mattsJenkinsKey2.pem
-                        
+
                         aws ec2 create-key-pair \
                           --region us-east-2 \
                           --key-name mattsJenkinsKey2.pem \
