@@ -69,17 +69,19 @@ pipeline{
             agent any
             steps{
                 sh '''
-                    if [ -f "mattsJenkinsKey_public.pem" ]
+                    if [ -f "mattsJenkinsKey2_public.pem" ]
                     then 
                         echo "file exists..."
                     else
                         aws ec2 create-key-pair \
                           --region us-east-2 \
-                          --key-name mattsJenkinsKey.pem \
+                          --key-name mattsJenkinsKey2.pem \
                           --query KeyMaterial \
-                          --output text > mattsJenkinsKey.pem
-                        chmod 400 mattsJenkinsKey.pem
-                        ssh-keygen -y -f mattsJenkinsKey.pem >> mattsJenkinsKey_public.pem
+                          --output text > mattsJenkinsKey2.pem
+
+                        chmod 400 mattsJenkinsKey2.pem
+
+                        ssh-keygen -y -f mattsJenkinsKey2.pem >> mattsJenkinsKey2_public.pem
                     fi
                 '''                
             }
@@ -108,7 +110,7 @@ pipeline{
                                 --nodes-min 1 \
                                 --nodes-max 2 \
                                 --ssh-access \
-                                --ssh-public-key  mattsJenkinsKey_public.pem \
+                                --ssh-public-key  mattsJenkinsKey2_public.pem \
                                 --managed
                         else
                             echo 'no need to create cluster...'
