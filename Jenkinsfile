@@ -117,7 +117,7 @@ pipeline{
         }
 
         stage('create-ebs'){
-            stage any
+            agent any
             steps{
                 sh '''
                     VolumeId=$(aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql-app" | grep VolumeId |cut -d '"' -f 4| head -n 1)  || true
