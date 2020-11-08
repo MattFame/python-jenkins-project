@@ -102,7 +102,7 @@ pipeline{
                         if [ "$exist" == '' ]
                         then
                             eksctl create cluster \
-                                --name my-cluster \
+                                --name matts-cluster \
                                 --version 1.18 \
                                 --region us-east-1 \
                                 --nodegroup-name my-nodes \
