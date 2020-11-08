@@ -73,8 +73,12 @@ pipeline{
                     then 
                         echo "file exists..."
                     else
-                        aws ec2 create-key-pair --region us-east-2 --key-name mattsJenkinsKey.pem --query KeyMaterial --output text > mattsJenkinsKey.pem"
-                        chmod 400 mattsJenkinsKey.pem"
+                        aws ec2 create-key-pair \
+                          --region us-east-2 \
+                          --key-name mattsJenkinsKey.pem \
+                          --query KeyMaterial \
+                          --output text > mattsJenkinsKey.pem
+                        chmod 400 mattsJenkinsKey.pem
                         ssh-keygen -y -f mattsJenkinsKey.pem >> mattsJenkinsKey_public.pem
                     fi
                 '''                
