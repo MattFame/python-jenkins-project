@@ -73,6 +73,8 @@ pipeline{
                     then 
                         echo "file exists..."
                     else
+                        aws ec2 delete-key-pair --key-name mattsJenkinsKey2.pem
+                        
                         aws ec2 create-key-pair \
                           --region us-east-2 \
                           --key-name mattsJenkinsKey2.pem \
