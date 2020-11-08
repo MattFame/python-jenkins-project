@@ -56,6 +56,7 @@ pipeline{
                 sh "docker push 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
             }
         }
+
         stage('compose'){
             agent any
             steps{
@@ -63,19 +64,26 @@ pipeline{
                 sh "docker-compose up -d"
             }
         }
-        // stage('get-keypair'){
-        //     agent any
-        //     steps{
-        //         //sh "aws ec2 create-key-pair --region us-east-2 --key-name matts2ndKey.pem --query KeyMaterial --output text > matts2ndKey.pem"
-        //         //sh "chmod 400 matts2ndKey.pem"
-        //         //sh "ssh-keygen -y -f matts2ndKey.pem >> matts2ndKey_public.pem"
-                
-        //     }
-        // }
-        stage('app-check'){
+
+        stage('get-keypair'){
             agent any
             steps{
-                // add jenkins to sudoers
+                sh '''
+                    if [ -f "mattsJenkinsKey_public.pem" ]
+                    then 
+                        echo "file exists..."
+                    else
+                        aws ec2 create-key-pair --region us-east-2 --key-name mattsJenkinsKey.pem --query KeyMaterial --output text > mattsJenkinsKey.pem"
+                        chmod 400 mattsJenkinsKey.pem"
+                        ssh-keygen -y -f mattsJenkinsKey.pem >> mattsJenkinsKey_public.pem
+                    fi
+                '''                
+            }
+        }
+
+        stage('app-check_&_cluster-create'){
+            agent any
+            steps{
                 sh '''
                     #!/bin/sh
                     echo $HOME
@@ -86,29 +94,48 @@ pipeline{
                         exist="$(aws eks list-clusters | grep my-cluster)" || true
                         if [ "$exist" == '' ]
                         then
-
-                        eksctl create cluster \
-                            --name my-cluster \
-                            --version 1.18 \
-                            --region us-east-1 \
-                            --nodegroup-name my-nodes \
-                            --node-type t2.small \
-                            --nodes 1 \
-                            --nodes-min 1 \
-                            --nodes-max 2 \
-                            --ssh-access \
-                            --ssh-public-key  matts2ndKey_public.pem \
-                            --managed
+                            eksctl create cluster \
+                                --name my-cluster \
+                                --version 1.18 \
+                                --region us-east-1 \
+                                --nodegroup-name my-nodes \
+                                --node-type t2.small \
+                                --nodes 1 \
+                                --nodes-min 1 \
+                                --nodes-max 2 \
+                                --ssh-access \
+                                --ssh-public-key  mattsJenkinsKey_public.pem \
+                                --managed
                         else
-                            echo no need to create cluster...
+                            echo 'no need to create cluster...'
                         fi
-                    else 
-                    echo app is not running...
+                    else
+                        echo 'app is not running with docker-compose up -d'
                     fi
                 '''
             }
         }
-        stage('Up&Running'){
+
+        stage('create-ebs'){
+            stage any
+            steps{
+                sh '''
+                    VolumeId=$(aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql-app" | grep VolumeId |cut -d '"' -f 4| head -n 1)  || true
+                    if [ "$VolumeId" == '' ]
+                    then
+                        aws ec2 create-volume \
+                            --availability-zone us-east-1a \
+                            --volume-type gp2 \
+                            --size 10 \
+                            --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=k8s-python-mysql-app}]'
+                        export EBS_VOLUME_ID=$VolumeId
+                    fi
+                    echo $EBS_VOLUME_ID
+                '''
+            }
+        }
+
+        stage('Up&Running?'){
             agent any
             steps{
                 sh "kubectl apply -f k8s"                
