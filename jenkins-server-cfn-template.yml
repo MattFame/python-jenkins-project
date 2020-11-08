@@ -89,7 +89,7 @@ Resources:
           # add jenkins to use docker without sudo
           usermod -a -G docker jenkins
           # add bash to jenkins user ---> adds into /etc/passwd file
-          sudo usermod -s /bin/bash jenkins
+          usermod -s /bin/bash jenkins
           # configure docker as cloud agent for jenkins
           #cp /lib/systemd/system/docker.service /lib/systemd/system/docker.service.bak
           # sed -i 's/^ExecStart=.*/ExecStart=\/usr\/bin\/dockerd -H tcp:\/\/127.0.0.1:2375 -H unix:\/\/\/var\/run\/docker.sock/g' /lib/systemd/system/docker.service
