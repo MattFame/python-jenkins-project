@@ -12,4 +12,4 @@ spec:
     - "ReadWriteMany"
   awsElasticBlockStore: 
     fsType: "ext4"
-    volumeID: $(EBS_VOLUME_ID)
+    volumeID: "{{EBS_VOLUME_ID}}"
