@@ -138,10 +138,12 @@ pipeline{
                         
                     fi
                     VolumeId=$(aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql-app" | grep VolumeId |cut -d '"' -f 4| head -n 1)
-                    export EBS_VOLUME_ID=$VolumeId
+                    env.EBS_VOLUME_ID=${VolumeId}
                     echo $EBS_VOLUME_ID
                 '''
-                sh "printenv"
+                // script {
+                //     env.EBS_VOLUME_ID = 
+                // }
             }
         }
 
