@@ -149,7 +149,7 @@ pipeline{
                     env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --filters Name=tag:Name,Values='k8s-python-mysql-app' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
                 }
                 sh "echo $EBS_VOLUME_ID"
-                sh "kubectl delete -f k8s"
+                //sh "kubectl delete -f k8s"
                 sh "kubectl apply -f k8s"
                 sh "kubectl get all"
                 sh "kubectl get pv"
