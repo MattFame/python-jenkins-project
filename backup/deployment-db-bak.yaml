@@ -21,13 +21,17 @@ spec:
         - containerPort: 3306
         args:
         - "--ignore-db-dir=lost+found"
-        envFrom:
-          - configMapRef:
-              name: config-db
-          - secretRef:
-              name: secret-db
-           
-
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: R1234r
+        - name: MYSQL_USER
+          value: clarusway
+        - name: MYSQL_PASSWORD
+          value: Clarusway
+        - name: MYSQL_DATABASE
+          value: phonebook
+        - name: MYSQL_PORT
+          value: "3306"
         volumeMounts:
           - name: mysql-persistent-storage
             mountPath: /var/lib/mysql
