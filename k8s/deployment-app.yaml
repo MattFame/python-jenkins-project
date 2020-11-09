@@ -21,7 +21,7 @@ spec:
         - containerPort: 80
         env:
         - name: MYSQL_DATABASE_HOST
-          value: service-db
+          value: service-db.default.svc.cluster.local
         - name: MYSQL_DATABASE_USER
           value: clarusway
         - name: MYSQL_DATABASE_PASSWORD
@@ -29,4 +29,4 @@ spec:
         - name: MYSQL_DATABASE_DB
           value: phonebook
         - name: MYSQL_DATABASE_PORT
-          value: "3306"
+          value: 3306

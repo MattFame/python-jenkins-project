@@ -19,6 +19,8 @@ spec:
         image: mysql:5.7
         ports:
         - containerPort: 3306
+        args:
+        - "--ignore-db-dir=lost+found"
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: R1234r
@@ -29,10 +31,11 @@ spec:
         - name: MYSQL_PASSWORD
           value: Clarusway
         - name: MYSQL_PORT
-          value: "3306"
+          value: 3306
         volumeMounts:
           - name: mysql-persistent-storage
             mountPath: /var/lib/mysql
+            subPath: mysql
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
