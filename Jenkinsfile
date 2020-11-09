@@ -150,7 +150,7 @@ pipeline{
                 }
                 sh "echo $EBS_VOLUME_ID"
                 // sh "kubectl delete -f k8s"
-                sh "sed 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
+                sh "sed -i 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
                 sh "kubectl apply -f k8s"
                 sh "kubectl get all"
                 sh "kubectl get pv"
