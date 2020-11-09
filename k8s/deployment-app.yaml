@@ -20,7 +20,7 @@ spec:
         ports:
         - containerPort: 80
         envFrom:
-          - configMapKey:
+          - configMapRef:
               name: config-app
-          - secretKey:
+          - secretRef:
               name: secret-app
