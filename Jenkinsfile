@@ -138,18 +138,18 @@ pipeline{
                         
                     fi
                 '''
-                script {
-                    VolumeId=aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql-app" | grep VolumeId |cut -d '"' -f 4| head -n 1
-                    env.EBS_VOLUME_ID = ${VolumeId} 
-                }
             }
         }
 
         stage('apply-k8s'){
             agent any
+
             steps{
+                script {
+                    env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --filters Name=tag:Name,Values='k8s-python-mysql-app' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
+                }    
                 sh "printenv"
-                sh "echo env.EBS_VOLUME_ID"
+                sh "echo $EBS_VOLUME_ID"
                 // sh "echo $EBS_VOLUME_ID"
                 // sh "kubectl apply -f k8s"
                 // sh "kubectl get all"
