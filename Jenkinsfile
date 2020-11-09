@@ -98,7 +98,7 @@ pipeline{
                     if [ "$running" != '' ]
                     then
                         docker-compose down
-                        exist="$(aws eks list-clusters | grep my-cluster)" || true
+                        exist="$(aws eks list-clusters | grep matts-cluster2)" || true
                         if [ "$exist" == '' ]
                         then
                             eksctl create cluster \
