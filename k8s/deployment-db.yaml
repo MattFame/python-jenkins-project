@@ -31,7 +31,7 @@ spec:
         - name: MYSQL_PASSWORD
           value: Clarusway
         - name: MYSQL_PORT
-          value: 3306
+          value: "3306"
         volumeMounts:
           - name: mysql-persistent-storage
             mountPath: /var/lib/mysql

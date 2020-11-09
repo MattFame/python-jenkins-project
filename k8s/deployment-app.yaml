@@ -29,4 +29,4 @@ spec:
         - name: MYSQL_DATABASE_DB
           value: phonebook
         - name: MYSQL_DATABASE_PORT
-          value: 3306
+          value: "3306"
