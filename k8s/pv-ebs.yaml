@@ -5,6 +5,7 @@ metadata:
   labels:
     name: pv-ebs 
 spec:
+  storageClassName: manual
   capacity:
     storage: "10Gi" 
   accessModes:

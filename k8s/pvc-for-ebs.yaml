@@ -3,9 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
-  selector:
-    matchLabels:
-      name: pv-ebs
+  storageClassName: manual
   accessModes:
   - ReadWriteMany
   resources:
