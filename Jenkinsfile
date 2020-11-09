@@ -141,13 +141,15 @@ pipeline{
                     export EBS_VOLUME_ID=$VolumeId
                     echo $EBS_VOLUME_ID
                 '''
+                sh "printenv"
             }
         }
 
         stage('apply-k8s'){
             agent any
             steps{
-                sh "echo $EBS_VOLUME_ID"
+                sh "printenv"
+                sh "echo env.EBS_VOLUME_ID"
                 // sh "echo $EBS_VOLUME_ID"
                 // sh "kubectl apply -f k8s"
                 // sh "kubectl get all"
