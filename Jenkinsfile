@@ -143,7 +143,6 @@ pipeline{
 
         stage('apply-k8s'){
             agent any
-
             steps{
                 script {
                     env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --filters Name=tag:Name,Values='k8s-python-mysql-app' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
