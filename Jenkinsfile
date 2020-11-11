@@ -57,14 +57,8 @@ pipeline{
                 //sh "export TEST=HELLO"
                 
                 sh '''
-                    whoami
-                    pwd
-                    cd ~
-                    ls -al
-                    sudo su ec2-user
-                    whoami
                     TEST=HELLO
-                    "echo 'export $TEST' >> /home/ec2-user/.bash_profile"
+                    "echo 'export $TEST' >> ~/.bash_profile"
                 '''
 
             }
