@@ -91,7 +91,7 @@ Resources:
           # add bash to jenkins user ---> adds into /etc/passwd file
           usermod -s /bin/bash jenkins
           # configure docker as cloud agent for jenkins
-          #cp /lib/systemd/system/docker.service /lib/systemd/system/docker.service.bak
+          # cp /lib/systemd/system/docker.service /lib/systemd/system/docker.service.bak
           # sed -i 's/^ExecStart=.*/ExecStart=\/usr\/bin\/dockerd -H tcp:\/\/127.0.0.1:2375 -H unix:\/\/\/var\/run\/docker.sock/g' /lib/systemd/system/docker.service
           # systemctl daemon-reload
           systemctl restart docker
@@ -111,7 +111,7 @@ Resources:
           chmod +x ./kubectl
           mv ./kubectl /usr/local/bin
           # download and install eksctl
-          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/0.31.0-rc.0/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
           mv /tmp/eksctl /usr/local/bin
 
 Outputs:
