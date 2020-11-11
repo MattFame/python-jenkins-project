@@ -57,9 +57,7 @@ pipeline{
                 //sh "export TEST=HELLO"
                 
                 sh '''
-                    source /etc/profile
-                    TEST=HELLO
-                    "echo 'export $TEST' >> ~/.bash_profile"
+                    echo hello world..
                 '''
 
             }
@@ -68,7 +66,7 @@ pipeline{
         stage('compose'){
             agent any
             steps{
-                sh "echo $TEST"
+                sh "echo hello worlds..."
                 // sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 046402772087.dkr.ecr.us-east-1.amazonaws.com"
                 // sh "docker-compose up -d"
             }
