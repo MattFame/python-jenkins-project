@@ -59,7 +59,7 @@ pipeline{
                 sh '''
                     sudo su jenkins
                     TEST=HELLO
-                    echo 'export $TEST' >> $HOME/.bash_profile
+                    "echo 'export $TEST' >> $HOME/.bash_profile"
                 '''
 
             }
