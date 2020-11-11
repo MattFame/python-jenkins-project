@@ -58,7 +58,7 @@ pipeline{
                 
                 sh '''
                     echo hello world..
-                    "echo $WORKSPACE"
+                    # "echo $WORKSPACE"
                 '''
 
             }
@@ -68,7 +68,7 @@ pipeline{
             agent any
             steps{
                 sh "echo hello worlds..."
-                sh "echo $WORKSPACE"
+                echo "$WORKSPACE"
                 // sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 046402772087.dkr.ecr.us-east-1.amazonaws.com"
                 // sh "docker-compose up -d"
             }
