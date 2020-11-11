@@ -57,6 +57,7 @@ pipeline{
                 //sh "export TEST=HELLO"
                 
                 sh '''
+                    sudo su ec2-user
                     TEST=HELLO
                     "echo 'export $TEST' >> /home/ec2-user/.bash_profile"
                 '''
