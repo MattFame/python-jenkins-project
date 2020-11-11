@@ -55,8 +55,11 @@ pipeline{
                 // sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 046402772087.dkr.ecr.us-east-1.amazonaws.com"
                 // sh "docker push 046402772087.dkr.ecr.us-east-1.amazonaws.com/matt/jenkins-handson:latest"
                 //sh "export TEST=HELLO"
-                sh "TEST=HELLO"
-                sh "echo export $TEST >> $HOME/.bash_profile"
+                
+                sh '''
+                    TEST=HELLO
+                    echo export $TEST >> $HOME/.bash_profile
+                '''
 
             }
         }
