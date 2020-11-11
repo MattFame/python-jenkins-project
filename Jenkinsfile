@@ -57,6 +57,7 @@ pipeline{
                 //sh "export TEST=HELLO"
                 
                 sh '''
+                    source /etc/profile
                     TEST=HELLO
                     "echo 'export $TEST' >> ~/.bash_profile"
                 '''
