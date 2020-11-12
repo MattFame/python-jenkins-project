@@ -64,5 +64,28 @@ pipeline{
                 sh "docker-compose up -d"
             }
         }
+
+        stage('get-keypair'){
+            agent any
+            steps{
+                sh '''
+                    if [ -f "mattsJenkinsKey5_public.pem" ]
+                    then 
+                        echo "file exists..."
+                    else
+                        aws ec2 create-key-pair \
+                          --region us-east-1 \
+                          --key-name mattsJenkinsKey5.pem \
+                          --query KeyMaterial \
+                          --output text > mattsJenkinsKey5.pem
+
+                        chmod 400 mattsJenkinsKey5.pem
+
+                        ssh-keygen -y -f mattsJenkinsKey5.pem >> mattsJenkinsKey5_public.pem
+                    fi
+                '''                
+            }
+        }
+
     }
 }
