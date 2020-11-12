@@ -121,7 +121,6 @@ pipeline{
                     if [ "$VolumeId" == '' ]
                     then
                         aws ec2 create-volume \
-                            --region us-east-2
                             --availability-zone us-east-2c\
                             --volume-type gp2 \
                             --size 10 \
