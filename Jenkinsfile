@@ -98,6 +98,7 @@ pipeline{
                     then
                         docker-compose down
                         exist="$(aws eks list-clusters | grep matts-cluster4)" || true
+
                         if [ "$exist" == '' ]
                         then
                             eksctl create cluster \
@@ -119,6 +120,40 @@ pipeline{
                         echo 'app is not running with docker-compose up -d'
                     fi
                 '''
+            }
+        }
+
+        stage('create-ebs'){
+            agent any
+            steps{
+                sh '''
+                    VolumeId=$(aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql-app" | grep VolumeId |cut -d '"' -f 4| head -n 1)  || true
+                    if [ "$VolumeId" == '' ]
+                    then
+                        aws ec2 create-volume \
+                            --availability-zone us-east-2a \
+                            --volume-type gp2 \
+                            --size 10 \
+                            --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=k8s-python-mysql-app}]'
+                        
+                    fi
+                '''
+            }
+        }
+
+        stage('apply-k8s'){
+            agent any
+            steps{
+                script {
+                    env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --filters Name=tag:Name,Values='k8s-python-mysql-app' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
+                }
+                sh "sed -i 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
+                sh "kubectl apply -f k8s"                
+            }
+            post {
+                failure {
+                    sh "kubectl delete -f k8s"
+                }
             }
         }
     }
