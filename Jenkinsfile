@@ -101,18 +101,8 @@ pipeline{
 
                         if [ "$exist" == '' ]
                         then
-                            eksctl create cluster \
-                                --name matts-cluster4 \
-                                --version 1.18 \
-                                --region us-east-2 \
-                                --nodegroup-name my-nodes \
-                                --node-type t2.small \
-                                --nodes 1 \
-                                --nodes-min 1 \
-                                --nodes-max 2 \
-                                --ssh-access \
-                                --ssh-public-key  mattsJenkinsKey6_public.pem \
-                                --managed
+                            
+                            echo "we alreay created this cluster...."
                         else
                             echo 'no need to create cluster...'
                         fi
@@ -159,3 +149,4 @@ pipeline{
     }
 
 }
+
