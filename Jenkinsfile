@@ -93,14 +93,15 @@ pipeline{
                 sh '''
                     #!/bin/sh
                     running=$(sudo lsof -i:80) || true
+                    
                     if [ "$running" != '' ]
                     then
                         docker-compose down
-                        exist="$(aws eks list-clusters | grep matts-cluster2)" || true
+                        exist="$(aws eks list-clusters | grep matts-cluster3)" || true
                         if [ "$exist" == '' ]
                         then
                             eksctl create cluster \
-                                --name matts-cluster2 \
+                                --name matts-cluster3 \
                                 --version 1.18 \
                                 --region us-east-1 \
                                 --nodegroup-name my-nodes \
@@ -109,7 +110,7 @@ pipeline{
                                 --nodes-min 1 \
                                 --nodes-max 2 \
                                 --ssh-access \
-                                --ssh-public-key  mattsJenkinsKey3_public.pem \
+                                --ssh-public-key  mattsJenkinsKey5_public.pem \
                                 --managed
                         else
                             echo 'no need to create cluster...'
@@ -121,5 +122,5 @@ pipeline{
             }
         }
     }
-    
+
 }
