@@ -69,19 +69,19 @@ pipeline{
             agent any
             steps{
                 sh '''
-                    if [ -f "mattsJenkinsKey5_public.pem" ]
+                    if [ -f "mattsJenkinsKey6_public.pem" ]
                     then 
                         echo "file exists..."
                     else
                         aws ec2 create-key-pair \
-                          --region us-east-1 \
-                          --key-name mattsJenkinsKey5.pem \
+                          --region us-east-2 \
+                          --key-name mattsJenkinsKey6.pem \
                           --query KeyMaterial \
-                          --output text > mattsJenkinsKey5.pem
+                          --output text > mattsJenkinsKey6.pem
 
-                        chmod 400 mattsJenkinsKey5.pem
+                        chmod 400 mattsJenkinsKey6.pem
 
-                        ssh-keygen -y -f mattsJenkinsKey5.pem >> mattsJenkinsKey5_public.pem
+                        ssh-keygen -y -f mattsJenkinsKey6.pem >> mattsJenkinsKey6_public.pem
                     fi
                 '''                
             }
@@ -103,14 +103,14 @@ pipeline{
                             eksctl create cluster \
                                 --name matts-cluster3 \
                                 --version 1.18 \
-                                --region us-east-1 \
+                                --region us-east-2 \
                                 --nodegroup-name my-nodes \
                                 --node-type t2.small \
                                 --nodes 1 \
                                 --nodes-min 1 \
                                 --nodes-max 2 \
                                 --ssh-access \
-                                --ssh-public-key  mattsJenkinsKey5_public.pem \
+                                --ssh-public-key  mattsJenkinsKey6_public.pem \
                                 --managed
                         else
                             echo 'no need to create cluster...'
