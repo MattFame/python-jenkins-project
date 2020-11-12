@@ -117,11 +117,11 @@ pipeline{
             agent any
             steps{
                 sh '''
-                    VolumeId=$(aws ec2 describe-volumes --region us-east-2 --filters Name=tag:Name,Values="k8s-python-mysql2" | grep VolumeId |cut -d '"' -f 4| head -n 1)  || true
+                    VolumeId=$(aws ec2 describe-volumes --filters Name=tag:Name,Values="k8s-python-mysql2" | grep VolumeId |cut -d '"' -f 4| head -n 1)  || true
                     if [ "$VolumeId" == '' ]
                     then
                         aws ec2 create-volume \
-                            --availability-zone us-east-2c\
+                            --availability-zone us-east-1c\
                             --volume-type gp2 \
                             --size 10 \
                             --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=k8s-python-mysql2}]'
@@ -135,7 +135,7 @@ pipeline{
             agent any
             steps{
                 script {
-                    env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --region us-east-2 --filters Name=tag:Name,Values='k8s-python-mysql2' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
+                    env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --filters Name=tag:Name,Values='k8s-python-mysql2' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
                 }
                 sh "sed -i 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
                 sh "kubectl apply -f k8s"                
